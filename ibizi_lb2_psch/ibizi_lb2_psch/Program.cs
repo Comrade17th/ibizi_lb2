@@ -75,9 +75,10 @@ namespace ibizi_lb2_psch
             for(int i = 0; i < text.Length; i++)
             {
                 gamma += (char)(PSCHgen(i));
-                result += (char)((int)text[i] | (int)gamma[i]);
+                result += (char)((int)text[i] ^ (int)gamma[i]);
             }
-            Console.WriteLine($"gamma:{gamma}");
+            Console.WriteLine($"gamma:\n{text_to_bit_text(gamma)}");
+            Console.WriteLine($"Encrypted:\n{text_to_bit_text(result)}");
             return result;
         }
 
@@ -88,15 +89,21 @@ namespace ibizi_lb2_psch
             for (int i = 0; i < text.Length; i++)
             {
                 gamma += (char)PSCHgen(i);
-                result += (char)((int)text[i] | (int)gamma[i]);
+                result += (char)((int)text[i] ^ (int)gamma[i]);
             }
-            Console.WriteLine($"gamma:{gamma}");
+            Console.WriteLine($"Encrypted:\n{text_to_bit_text(text)}");
+            Console.WriteLine($"gamma:\n{text_to_bit_text(gamma)}");
+            Console.WriteLine($"Decrypted:\n{text_to_bit_text(result)}");
             return result;
         }
         static void Main(string[] args)
         {
             string text = "Hello";
-            Console.WriteLine(text_to_bit_text(text));
+            Console.WriteLine(text);
+            Console.WriteLine($"Origin:\n{text_to_bit_text(text)}");
+            string crypted = Encrypt(text);
+            string decrypted = Decrypt(crypted);
+            Console.WriteLine(decrypted);
             /*
             string encrypted_text = Encrypt(text);
             Console.WriteLine(encrypted_text);
